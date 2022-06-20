@@ -23,9 +23,10 @@ class PageAction {
 
   PageAction({this.state = PageState.none, this.page, this.pages, this.widget});
 }
+
 class AppState extends ChangeNotifier {
-  bool _loggedIn = false;
-  bool get loggedIn  => _loggedIn;
+  bool? _loggedIn = false;
+  bool get loggedIn  => _loggedIn!;
   bool _splashFinished = false;
   bool get splashFinished => _splashFinished;
   final cartItems = [];
@@ -63,9 +64,11 @@ class AppState extends ChangeNotifier {
 
   void setSplashFinished() {
     _splashFinished = true;
-    if (_loggedIn) {
+    if (_loggedIn! == true) {
+      print('User is logged in');
       _currentAction = PageAction(state: PageState.replaceAll, page: ListItemsPageConfig);
     } else {
+      print('User is logged out');
       _currentAction = PageAction(state: PageState.replaceAll, page: LoginPageConfig);
     }
     notifyListeners();
@@ -92,7 +95,7 @@ class AppState extends ChangeNotifier {
 
   void getLoggedInState() async {
     final prefs = await SharedPreferences.getInstance();
-    _loggedIn = prefs.getBool(loggedInKey)!;
+    _loggedIn = prefs.getBool(loggedInKey);
     if (_loggedIn == null) {
       _loggedIn = false;
     }

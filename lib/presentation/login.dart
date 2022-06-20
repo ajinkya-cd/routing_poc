@@ -18,8 +18,8 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context, listen: false);
-    passwordTextController.text = appState.password!;
-    emailTextController.text = appState.emailAddress!;
+    passwordTextController.text = appState.password ?? '';
+    emailTextController.text = appState.emailAddress ?? '';
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

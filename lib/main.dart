@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:routing_poc/presentation/splash.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'app_state.dart';
+import 'router/back_dispatcher.dart';
+import 'router/router_delegate.dart';
+import 'router/shopping_parser.dart';
+import 'router/ui_pages.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,13 +21,16 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final appState = AppState();
+  ShoppingRouterDelegate? delegate;
+  final parser = ShoppingParser();
+  ShoppingBackButtonDispatcher? backButtonDispatcher;
 
-  // TODO Create Delegate, Parser and Back button Dispatcher
-
-  // TODO Add Subscription
+  StreamSubscription? _linkSubscription;
 
   _MyAppState() {
-    // TODO Setup Router & dispatcher
+    delegate = ShoppingRouterDelegate(appState);
+    delegate!.setNewRoutePath(SplashPageConfig);
+    backButtonDispatcher = ShoppingBackButtonDispatcher(delegate!);
   }
 
   @override
@@ -34,28 +41,37 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
-    // TODO Dispose of Subscription
+    if (_linkSubscription != null) _linkSubscription!.cancel();
     super.dispose();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    // TODO Attach a listener to the Uri links stream
+    // Attach a listener to the Uri links stream
+    _linkSubscription = getUriLinksStream().listen((Uri? uri) {
+      if (!mounted) return;
+      setState(() {
+        delegate!.parseRoute(uri!);
+      });
+    }, onError: (Object err) {
+      print('Got error $err');
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO Add Router
     return ChangeNotifierProvider<AppState>(
       create: (_) => appState,
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'Navigation App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Splash(),
+        backButtonDispatcher: backButtonDispatcher,
+        routerDelegate: delegate!,
+        routeInformationParser: parser,
       ),
     );
   }
