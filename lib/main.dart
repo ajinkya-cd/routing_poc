@@ -66,7 +66,8 @@ class _MyAppState extends State<MyApp> {
         title: 'Navigation App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.lightGreen,
+          brightness: Brightness.dark,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         backButtonDispatcher: backButtonDispatcher,

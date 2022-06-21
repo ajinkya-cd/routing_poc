@@ -12,7 +12,7 @@ class Cart extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.lightGreen,
         title: const Text(
           'Cart',
           style: TextStyle(

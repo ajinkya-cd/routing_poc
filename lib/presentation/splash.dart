@@ -23,10 +23,16 @@ class _SplashState extends State<Splash> {
     final size = query.size;
     final itemWidth = size.width;
     final itemHeight = itemWidth * (size.width / size.height);
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Text('Splash Screen'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: const [
+            Icon(Icons.flutter_dash, size: 100,),
+            SizedBox(height: 16,),
+            Text('Flutter routing POC')
+          ],
         ),
       ),
     );

@@ -12,11 +12,11 @@ class Checkout extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.lightGreen,
         title: const Text(
           'Checkout',
           style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+              fontSize: 20, fontWeight: FontWeight.w500),
         ),
       ),
       body: SafeArea(
