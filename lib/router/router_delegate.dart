@@ -47,6 +47,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
     );
   }
 
+  /// Method to remove pages
   bool _onPopPage(Route<dynamic> route, result) {
     final didPop = route.didPop(result);
     if (!didPop) {
@@ -85,6 +86,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
     return Future.value(false);
   }
 
+  /// Create and add pages
   MaterialPage _createPage(Widget child, PageConfiguration pageConfig) {
     return MaterialPage(
         child: child,
@@ -137,6 +139,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
     }
   }
 
+  /// Methods to modify contents of _pages list
   void replace(PageConfiguration newRoute) {
     if (_pages.isNotEmpty) {
       _pages.removeLast();
@@ -180,6 +183,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
     return SynchronousFuture(null);
   }
 
+  /// Record the action associated to the page request
   void _setPageAction(PageAction action) {
     switch (action.page!.uiPage) {
       case Pages.Splash:
@@ -211,6 +215,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
     }
   }
 
+  /// Returns a list of pages based on current app state
   List<Page> buildPages() {
     if (!appState.splashFinished) {
       replaceAll(SplashPageConfig);
